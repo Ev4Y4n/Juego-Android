@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Utilities;
+using UI;
 
 namespace GameMechanic
 {
@@ -17,13 +18,21 @@ namespace GameMechanic
         [SerializeField] private int spawnSize;
         [SerializeField] private float spawnAngleMinMax;
         [SerializeField] private float spawnAngle;
-        
+        private bool gameOver;
         void Start()
         {
             screenHalfSizeWorldUnit = new Vector2(Camera.main.aspect * Camera.main.orthographicSize, Camera.main.orthographicSize);
+            GameOverUI.OnRestart += GameOverUI_OnRestart;
+        }
+
+        private void GameOverUI_OnRestart(bool isRestart)
+        {
+            gameOver = isRestart;
+            
         }
         void Update()
         {
+            if (gameOver) return;
             if (!(Time.time > nextSpawnTime)) return;
             float secondBtwSpawn = Mathf.Lerp(secondBtwSpawnMinMax.y, secondBtwSpawnMinMax.x, GraduallyDifficult.GetDifficultPercent());
             nextSpawnTime = Time.time + secondBtwSpawn;

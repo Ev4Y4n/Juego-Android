@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Trampa
   - Punto
   - PuntoFinal
+  - Obstacle
   layers:
   - Default
   - TransparentFX
