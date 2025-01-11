@@ -23,12 +23,14 @@ namespace UI
         void Start()
         {
             PlayerController.OnPlayerDeath += OnGameOver;
+            PlayerController.OnCarrotCollected += IncrementCarrotCount;
             maxTime = 1;
         }
 
         void Update()
         {
             if (gameOver) return;
+            /*
             currentTime += Time.deltaTime;
             if ( currentTime>maxTime)
             {
@@ -36,13 +38,13 @@ namespace UI
                 count++;
             }
             secondsSurvivedUI.text = count.ToString();
+            */
            
-
-            
         }
         
         public void OnGameOver()
         {
+            Debug.Log("You are in GameOver mode");
             gameOverScreen.SetActive(true);
             secondsSurvivedUI.text = count.ToString();
             gameOver = true;
@@ -50,14 +52,30 @@ namespace UI
 
         }
 
+        private void IncrementCarrotCount()
+        {
+            if (gameOver) return; // Si el juego ha terminado, no incrementes el contador.
+            count++;
+            secondsSurvivedUI.text = count.ToString(); // Actualiza el UI con el nuevo puntaje.
+        }
+
+        private void OnDestroy()
+        {
+            PlayerController.OnPlayerDeath -= OnGameOver;
+            PlayerController.OnCarrotCollected -= IncrementCarrotCount; // Desuscríbete.
+        }
+
         public void Restart()
         {
             gameOverScreen.SetActive(false);
             Time.timeScale = 1;
             gameOver = false;
-            count = 0;
-            OnRestart?.Invoke(gameOver);
 
+            // Reinicia el contador de puntos
+            count = 0;  // Reinicia el contador
+            secondsSurvivedUI.text = count.ToString(); // Actualiza la UI para mostrar el contador en 0
+
+            OnRestart?.Invoke(gameOver);  // Llama al evento OnRestart si tienes otros scripts suscritos
         }
 
         public void Exit()

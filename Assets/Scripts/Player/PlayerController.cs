@@ -15,6 +15,7 @@ namespace Player
         public Vector2 initialPosition = new Vector2(0, 0); //The player starts on the position 0, 0
 
         public static event Action OnPlayerDeath;
+        public static event Action OnCarrotCollected;
 
 
         private void Start()
@@ -70,7 +71,7 @@ namespace Player
             transform.position = position;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Obstacle"))
             {
@@ -81,6 +82,18 @@ namespace Player
             
             
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Carrot"))
+            {
+                Debug.Log("Has recogido una zanahoria");
+                OnCarrotCollected?.Invoke();
+                collision.gameObject.SetActive(false);
+            }
+        }
+
+
     }
 }
 

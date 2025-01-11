@@ -16,6 +16,19 @@ namespace Utilities
 
         void Update()
         {
+            if (ObjectPooler.Instance == null)
+            {
+                Debug.LogError("ObjectPooler.Instance es nulo. Asegúrate de que el objeto ObjectPooler esté presente en la escena.");
+                return;
+            }
+
+            // Verifica si `targetPos` está asignado
+            if (targetPos == null)
+            {
+                Debug.LogError("targetPos no está asignado. Asegúrate de configurarlo en el inspector.");
+                return;
+            }
+
             timeSinceLastSpawn += Time.deltaTime;
 
             if (timeSinceLastSpawn >= spawnInterval)

@@ -64,7 +64,8 @@ namespace Utilities
 
                 // Apply random scaling to the object on either X or Y axis
                 Vector3 randomScale = Vector3.one;
-
+                
+                /*
                 // Randomly decide to scale on X or Y
                 if (Random.value > 0.5f)
                     // Random scale on X axis
@@ -74,6 +75,7 @@ namespace Utilities
                     randomScale.y = Random.Range(scaleRangeY.x, scaleRangeY.y);
                 // Apply the scale to the object
                 pooledObject.transform.localScale = randomScale;
+                */
 
                 // Activate the object
                 pooledObject.SetActive(true);

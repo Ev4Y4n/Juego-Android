@@ -37,7 +37,7 @@ namespace GameMechanic
           visibleThresholdHeight -= Time.deltaTime;
           if (!(visibleThresholdHeight < 0)) return; 
           gameObject.SetActive(false);
-          visibleThresholdHeight = 5;
+          visibleThresholdHeight = 10;
         }
     }
 }
