@@ -16,11 +16,18 @@ namespace Player
 
         public static event Action OnPlayerDeath;
         public static event Action OnCarrotCollected;
+        public static event Action<bool> OnHurt;
 
+        public GameObject life1, life2, life3;
+        private int lifeCounter=3;
 
         private void Start()
         {
             GameOverUI.OnRestart += GameOverUI_OnRestart;
+            life1.SetActive(true);
+            life2.SetActive(true);
+            life3.SetActive(true);
+            //ResetLives();
         }
 
         private void GameOverUI_OnRestart(bool isRestart)
@@ -71,16 +78,48 @@ namespace Player
             transform.position = position;
         }
 
+        public void ResetLives()
+        {
+            lifeCounter = 3;
+        }
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.CompareTag("Obstacle"))
             {
                 Debug.Log("Te has chocado");
-                OnPlayerDeath?.Invoke();
-                gameOver = true;
+                OnHurt?.Invoke(true);
+                if(lifeCounter==3)
+                {
+                    life1.SetActive(false);
+                    lifeCounter--;
+                }else if (lifeCounter == 2)
+                {
+                    life2.SetActive(false);
+                    lifeCounter--;
+                }else if (lifeCounter == 1)
+                {
+                    life3.SetActive(false);
+                    lifeCounter--;
+                    if (lifeCounter == 0)
+                    {
+                        OnPlayerDeath?.Invoke();
+                        gameOver = true;
+                    }
+                }
             }
             
-            
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Obstacle"))
+            {
+                Debug.Log("Te has chocado");
+                OnHurt?.Invoke(false);
+                //OnPlayerDeath?.Invoke();
+                //gameOver = true;
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

@@ -19,6 +19,8 @@ namespace UI
         private float maxTime;
 
         public static event Action<bool> OnRestart;
+        public PlayerController playerScript;
+
 
         void Start()
         {
@@ -70,12 +72,21 @@ namespace UI
             gameOverScreen.SetActive(false);
             Time.timeScale = 1;
             gameOver = false;
-
             // Reinicia el contador de puntos
             count = 0;  // Reinicia el contador
             secondsSurvivedUI.text = count.ToString(); // Actualiza la UI para mostrar el contador en 0
 
+            playerScript = FindObjectOfType<PlayerController>();
+
+            if (playerScript != null)
+            {
+                playerScript.life1.SetActive(true);
+                playerScript.life2.SetActive(true);
+                playerScript.life3.SetActive(true);
+                playerScript.ResetLives(); // Método para restaurar el contador de vidas
+            }
             OnRestart?.Invoke(gameOver);  // Llama al evento OnRestart si tienes otros scripts suscritos
+            
         }
 
         public void Exit()
