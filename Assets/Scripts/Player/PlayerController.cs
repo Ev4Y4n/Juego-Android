@@ -21,13 +21,20 @@ namespace Player
         public GameObject life1, life2, life3;
         private int lifeCounter=3;
 
-        private void Start()
+        private void OnEnable()
         {
             GameOverUI.OnRestart += GameOverUI_OnRestart;
+        }
+        private void OnDisable()
+        {
+            GameOverUI.OnRestart -= GameOverUI_OnRestart;
+        }
+
+        private void Start()
+        {
             life1.SetActive(true);
             life2.SetActive(true);
             life3.SetActive(true);
-            //ResetLives();
         }
 
         private void GameOverUI_OnRestart(bool isRestart)
@@ -87,7 +94,7 @@ namespace Player
         {
             if (collision.gameObject.CompareTag("Obstacle"))
             {
-                Debug.Log("Te has chocado");
+                //Debug.Log("Te has chocado");
                 OnHurt?.Invoke(true);
                 if(lifeCounter==3)
                 {
@@ -115,7 +122,6 @@ namespace Player
         {
             if (collision.gameObject.CompareTag("Obstacle"))
             {
-                Debug.Log("Te has chocado");
                 OnHurt?.Invoke(false);
                 //OnPlayerDeath?.Invoke();
                 //gameOver = true;

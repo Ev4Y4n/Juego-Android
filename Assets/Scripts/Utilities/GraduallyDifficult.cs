@@ -8,6 +8,7 @@ namespace Utilities
 
         public static float GetDifficultPercent()
         {
+            Debug.Log("Level loader: "+ Time.timeSinceLevelLoad);
             return Mathf.Clamp01(Time.timeSinceLevelLoad / SECONDS_TO_DIFFICULT);
         }
     }

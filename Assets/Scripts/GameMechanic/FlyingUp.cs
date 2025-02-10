@@ -13,12 +13,19 @@ namespace GameMechanic
         [SerializeField]
         private float visibleThresholdHeight;
 
+        private void OnEnable()
+        {
+            GameOverUI.OnRestart += GameOverUI_OnRestart;
+        }
+        private void OnDisable()
+        {
+            GameOverUI.OnRestart -= GameOverUI_OnRestart;
+        }
         private void Start()
         {
             speed = Mathf.Lerp(speedMinMax.x, speedMinMax.y, GraduallyDifficult.GetDifficultPercent());
             // if (Camera.main != null)
             //     visibleThresholdHeight = -Camera.main.orthographicSize - transform.localScale.y;  
-            GameOverUI.OnRestart += GameOverUI_OnRestart;
         }
     
         private void GameOverUI_OnRestart(bool isRestart)

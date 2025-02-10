@@ -8,6 +8,7 @@ TagManager:
   - PuntoFinal
   - Obstacle
   - Carrot
+  - Shield
   layers:
   - Default
   - TransparentFX
